@@ -1,10 +1,13 @@
 package web
 
 import (
+	"fmt"
+
 	"github.com/darllantissei/api-cartesian/application"
 	"github.com/darllantissei/api-cartesian/application/common"
 	"github.com/darllantissei/api-cartesian/application/models"
-	"github.com/eucatur/go-toolbox/api"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 type WebServer struct {
@@ -17,27 +20,36 @@ func MakeNewWebServer(applicationService application.Application) *WebServer {
 	}
 }
 
-func (w *WebServer) Serve(port int) {
+func (w *WebServer) Serve(port int, isDebug bool) {
 
-	echoServer := api.Make()
+	e := echo.New()
 
-	api.Use(w.Logger())
+	e.HideBanner = true
 
-	echoServer.HTTPErrorHandler = w.errorServer
+	if isDebug {
+		e.Debug = true
+		e.Use(middleware.Logger())
+	}
 
-	api.ProvideEchoInstance(w.buildRoutes)
+	e.Use(middleware.CORS())
+	e.Use(middleware.Recover())
 
-	api.Run()
+	e.HTTPErrorHandler = w.errorServer
+
+	w.buildRoutes(e)
+
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", port)))
+
 }
 
-func (w *WebServer) buildError(err error) error {
+func (w *WebServer) buildError(errs []string) error {
 
-	if err != nil {
+	if len(errs) > 0 {
 
 		errResult := models.Returns{}
 
 		errResult.Return.Status = common.StatusError
-		errResult.Return.Message = []string{err.Error()}
+		errResult.Return.Message = errs
 
 		return errResult
 	}

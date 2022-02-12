@@ -2,12 +2,11 @@ package web
 
 import (
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 )
 
 func (w *WebServer) buildRoutes(echoServer *echo.Echo) {
 
-	groupV1 := echoServer.Group("/api", middleware.BasicAuth(w.Authorization))
+	groupV1 := echoServer.Group("/api")
 
 	w.pointsRoutes(groupV1)
 }

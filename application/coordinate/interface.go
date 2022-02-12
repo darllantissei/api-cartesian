@@ -3,5 +3,13 @@ package coordinate
 import "github.com/darllantissei/api-cartesian/application/models"
 
 type ICoordinateService interface {
-	Proccess(coordiante []int64) ([]models.Coordinate, error)
+	Proccess(coordX, coordY int64) ([]models.Way, error)
+}
+
+type ICoordinateReaderFile interface {
+	ListPoints() (models.Points, error)
+}
+
+type ICoordinatePersistenceFile interface {
+	ICoordinateReaderFile
 }

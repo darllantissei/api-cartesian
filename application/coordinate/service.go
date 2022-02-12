@@ -1,27 +1,27 @@
 package coordinate
 
 import (
-	"errors"
-	"math"
-
+	"github.com/darllantissei/api-cartesian/application/common"
 	"github.com/darllantissei/api-cartesian/application/models"
+	"github.com/darllantissei/api-cartesian/application/utils"
 )
 
 type CoordinateService struct {
+	PersisenceFile ICoordinatePersistenceFile
+	Utils           utils.IUtilsService
 }
 
-func (c *CoordinateService) Proccess(coordiante []int64) ([]models.Coordinate, error) {
+func (c *CoordinateService) Proccess(coordX, coordY int64) ([]models.Way, error) {
 
-	var distance float64 = 0
+	coordinateBase, err := c.PersisenceFile.ListPoints()
 
-	coordinateBase := []int64{
-		20,
-		10,
+	if err != nil {
+		return []models.Way{}, c.buildError(common.StatusError, []string{err.Error()})
 	}
 
-	for i, value := range coordiante {
-		distance += math.Abs(float64(value) - float64(coordinateBase[i]))
-	}
+	way := c.calculateDisctance(coordX, coordY, coordinateBase)
 
-	return []models.Coordinate{}, errors.New("yet implementing")
+	way = c.sortDistance(way)
+
+	return way, nil
 }
