@@ -19,7 +19,7 @@ func (c *CoordinateService) Proccess(coordX, coordY int64) ([]models.Way, error)
 		return []models.Way{}, c.buildError(common.StatusError, []string{err.Error()})
 	}
 
-	way := c.calculateDisctance(coordX, coordY, coordinateBase)
+	way := c.calculateDistance(coordX, coordY, coordinateBase)
 
 	way = c.sortDistance(way)
 

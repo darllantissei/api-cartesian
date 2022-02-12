@@ -17,7 +17,7 @@ func (c *CoordinateService) buildError(status string, messages []string) error {
 	return &retErr
 }
 
-func (c *CoordinateService) calculateDisctance(coordX, coordY int64, coordinateBase models.Points) []models.Way {
+func (c *CoordinateService) calculateDistance(coordX, coordY int64, coordinateBase models.Points) []models.Way {
 
 	way := []models.Way{}
 

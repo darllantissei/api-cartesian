@@ -56,7 +56,7 @@ func TestCalculateDisctance(t *testing.T) {
 		Utils:           mockUtils,
 	}
 
-	way := coordinateService.calculateDisctance(10, 20, models.Points{{X: 20, Y: 10}})
+	way := coordinateService.calculateDistance(10, 20, models.Points{{X: 20, Y: 10}})
 
 	assert.Equal(t, 1, len(way))
 
