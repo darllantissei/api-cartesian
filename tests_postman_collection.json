@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "148b49a7-a5b9-43eb-a55c-c8b7771d46b6",
+		"name": "api-cartesian",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get distance from points",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const httpOK = 200\r",
+							"let respOK = pm.response.code;\r",
+							"\r",
+							"tests[`request processed`] = respOK === httpOK;\r",
+							"\r",
+							"if (httpOK === respOK) {\r",
+							"\r",
+							"    let resp = JSON.parse(responseBody);\r",
+							"\r",
+							"    let numObj = 0\r",
+							"    for (const data of resp) {\r",
+							"        numObj++\r",
+							"\r",
+							"        tests[`data[${numObj}].fom.x returned`] = !isEmpty(data.from.x);\r",
+							"\r",
+							"        tests[`data[${numObj}].fom.y returned`] = !isEmpty(data.from.y);\r",
+							"\r",
+							"        tests[`data[${numObj}].to.x returned`] = !isEmpty(data.to.x);\r",
+							"\r",
+							"        tests[`data[${numObj}].to.y returned`] = !isEmpty(data.to.y);\r",
+							"\r",
+							"        tests[`data[${numObj}].distance returned`] = !isEmpty(data.distance);\r",
+							"\r",
+							"\r",
+							"    }\r",
+							"\r",
+							"\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function isEmpty(content) {\r",
+							"\r",
+							"    return [\"\", null, undefined].includes(content);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/points?coordX=-3&coordY=-20",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"points"
+					],
+					"query": [
+						{
+							"key": "coordX",
+							"value": "-3"
+						},
+						{
+							"key": "coordY",
+							"value": "-20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"let urlAPI = \"http://localhost:9000\"",
+					"",
+					"pm.collectionVariables.set(\"URL\", urlAPI);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": ""
+		}
+	]
+}
