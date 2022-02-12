@@ -41,6 +41,12 @@ func main() {
 		FilePoints: "points.json",
 	})
 
+	_, err := sourcePoints.ListPoints()
+
+	if err != nil {
+		panic("unable load list of points")
+	}
+
 	coordinateService := coordinate.CoordinateService{
 		PersisenceFile: sourcePoints,
 	}
