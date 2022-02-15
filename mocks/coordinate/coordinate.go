@@ -35,18 +35,18 @@ func (m *MockICoordinateService) EXPECT() *MockICoordinateServiceMockRecorder {
 }
 
 // Proccess mocks base method.
-func (m *MockICoordinateService) Proccess(coordX, coordY int64) ([]models.Way, error) {
+func (m *MockICoordinateService) Proccess(coordX, coordY, distance int64) ([]models.Way, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Proccess", coordX, coordY)
+	ret := m.ctrl.Call(m, "Proccess", coordX, coordY, distance)
 	ret0, _ := ret[0].([]models.Way)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Proccess indicates an expected call of Proccess.
-func (mr *MockICoordinateServiceMockRecorder) Proccess(coordX, coordY interface{}) *gomock.Call {
+func (mr *MockICoordinateServiceMockRecorder) Proccess(coordX, coordY, distance interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Proccess", reflect.TypeOf((*MockICoordinateService)(nil).Proccess), coordX, coordY)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Proccess", reflect.TypeOf((*MockICoordinateService)(nil).Proccess), coordX, coordY, distance)
 }
 
 // MockICoordinateReaderFile is a mock of ICoordinateReaderFile interface.
@@ -87,31 +87,31 @@ func (mr *MockICoordinateReaderFileMockRecorder) ListPoints() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPoints", reflect.TypeOf((*MockICoordinateReaderFile)(nil).ListPoints))
 }
 
-// MockICoordinatePersistenceCache is a mock of ICoordinatePersistenceCache interface.
-type MockICoordinatePersistenceCache struct {
+// MockICoordinatePersistenceFile is a mock of ICoordinatePersistenceFile interface.
+type MockICoordinatePersistenceFile struct {
 	ctrl     *gomock.Controller
-	recorder *MockICoordinatePersistenceCacheMockRecorder
+	recorder *MockICoordinatePersistenceFileMockRecorder
 }
 
-// MockICoordinatePersistenceCacheMockRecorder is the mock recorder for MockICoordinatePersistenceCache.
-type MockICoordinatePersistenceCacheMockRecorder struct {
-	mock *MockICoordinatePersistenceCache
+// MockICoordinatePersistenceFileMockRecorder is the mock recorder for MockICoordinatePersistenceFile.
+type MockICoordinatePersistenceFileMockRecorder struct {
+	mock *MockICoordinatePersistenceFile
 }
 
-// NewMockICoordinatePersistenceCache creates a new mock instance.
-func NewMockICoordinatePersistenceCache(ctrl *gomock.Controller) *MockICoordinatePersistenceCache {
-	mock := &MockICoordinatePersistenceCache{ctrl: ctrl}
-	mock.recorder = &MockICoordinatePersistenceCacheMockRecorder{mock}
+// NewMockICoordinatePersistenceFile creates a new mock instance.
+func NewMockICoordinatePersistenceFile(ctrl *gomock.Controller) *MockICoordinatePersistenceFile {
+	mock := &MockICoordinatePersistenceFile{ctrl: ctrl}
+	mock.recorder = &MockICoordinatePersistenceFileMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockICoordinatePersistenceCache) EXPECT() *MockICoordinatePersistenceCacheMockRecorder {
+func (m *MockICoordinatePersistenceFile) EXPECT() *MockICoordinatePersistenceFileMockRecorder {
 	return m.recorder
 }
 
 // ListPoints mocks base method.
-func (m *MockICoordinatePersistenceCache) ListPoints() (models.Points, error) {
+func (m *MockICoordinatePersistenceFile) ListPoints() (models.Points, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListPoints")
 	ret0, _ := ret[0].(models.Points)
@@ -120,7 +120,7 @@ func (m *MockICoordinatePersistenceCache) ListPoints() (models.Points, error) {
 }
 
 // ListPoints indicates an expected call of ListPoints.
-func (mr *MockICoordinatePersistenceCacheMockRecorder) ListPoints() *gomock.Call {
+func (mr *MockICoordinatePersistenceFileMockRecorder) ListPoints() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPoints", reflect.TypeOf((*MockICoordinatePersistenceCache)(nil).ListPoints))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPoints", reflect.TypeOf((*MockICoordinatePersistenceFile)(nil).ListPoints))
 }

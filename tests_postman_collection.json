@@ -55,7 +55,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URL}}/api/points?coordX=-3&coordY=-20",
+					"raw": "{{URL}}/api/points?coordX=-3&coordY=4&distance=20",
 					"host": [
 						"{{URL}}"
 					],
@@ -70,7 +70,11 @@
 						},
 						{
 							"key": "coordY",
-							"value": "-20"
+							"value": "4"
+						},
+						{
+							"key": "distance",
+							"value": "20"
 						}
 					]
 				}

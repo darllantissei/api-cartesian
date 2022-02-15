@@ -18,7 +18,7 @@ func TestProccess(t *testing.T) {
 
 	mockUtils := mock_utils.NewMockIUtilsService(ctrl)
 
-	mockPersistence := mock_coordinate.NewMockICoordinatePersistenceCache(ctrl)
+	mockPersistence := mock_coordinate.NewMockICoordinateReaderFile(ctrl)
 
 	mockUtils.EXPECT().FileExists("").Return(true).AnyTimes()
 
@@ -26,10 +26,10 @@ func TestProccess(t *testing.T) {
 
 	coordinateService := CoordinateService{
 		PersisenceFile: mockPersistence,
-		Utils:           mockUtils,
+		Utils:          mockUtils,
 	}
 
-	way, err := coordinateService.Proccess(10, 20)
+	way, err := coordinateService.Proccess(10, 20, 20)
 
 	assert.Nil(t, err)
 
@@ -37,7 +37,7 @@ func TestProccess(t *testing.T) {
 
 	for _, options := range way {
 
-		assert.Equal(t, int(20), options.Distante)
+		assert.Equal(t, int64(20), options.Distante)
 
 	}
 }
@@ -49,20 +49,51 @@ func TestCalculateDisctance(t *testing.T) {
 
 	mockUtils := mock_utils.NewMockIUtilsService(ctrl)
 
-	mockPersistence := mock_coordinate.NewMockICoordinatePersistenceCache(ctrl)
+	mockPersistence := mock_coordinate.NewMockICoordinatePersistenceFile(ctrl)
 
 	coordinateService := CoordinateService{
 		PersisenceFile: mockPersistence,
-		Utils:           mockUtils,
+		Utils:          mockUtils,
 	}
 
-	way := coordinateService.calculateDistance(10, 20, models.Points{{X: 20, Y: 10}})
+	way := coordinateService.calculateDistance(10, 20, 20, models.Points{{X: 20, Y: 10}})
 
 	assert.Equal(t, 1, len(way))
 
 	for _, options := range way {
 
-		assert.Equal(t, int(20), options.Distante)
+		assert.Equal(t, int64(20), options.Distante)
 
 	}
+}
+
+func TestManhattanDistance(t *testing.T) {
+
+	ctrl := gomock.NewController(t)
+
+	defer ctrl.Finish()
+
+	mockUtils := mock_utils.NewMockIUtilsService(ctrl)
+
+	mockPersistence := mock_coordinate.NewMockICoordinatePersistenceFile(ctrl)
+
+	coordinateService := CoordinateService{
+		PersisenceFile: mockPersistence,
+		Utils:          mockUtils,
+	}
+
+	paramsCoordiante := []int64{
+		10,
+		20,
+	}
+
+	baseCoordinate := []int64{
+		20,
+		10,
+	}
+
+	distance := coordinateService.manhattanDistance(paramsCoordiante, baseCoordinate)
+
+	assert.Equal(t, int64(20), distance)
+
 }

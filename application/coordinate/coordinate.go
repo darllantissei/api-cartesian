@@ -17,27 +17,40 @@ func (c *CoordinateService) buildError(status string, messages []string) error {
 	return &retErr
 }
 
-func (c *CoordinateService) calculateDistance(coordX, coordY int64, coordinateBase models.Points) []models.Way {
+func (c *CoordinateService) calculateDistance(coordX, coordY, paramDistance int64, coordinateBase models.Points) []models.Way {
 
 	way := []models.Way{}
 
 	for _, coordinate := range coordinateBase {
-		distance := math.Abs(float64(coordinate.X) - float64(coordX))
-		distance += math.Abs(float64(coordinate.Y) - float64(coordY))
 
-		options := models.Way{
-			From: models.Coordinate{
-				X: int(coordX),
-				Y: int(coordY),
-			},
-			To: models.Coordinate{
-				X: coordinate.X,
-				Y: coordinate.Y,
-			},
-			Distante: int(distance),
+		coordParam := []int64{
+			coordX,
+			coordY,
 		}
 
-		way = append(way, options)
+		coordBase := []int64{
+			coordinate.X,
+			coordinate.Y,
+		}
+
+		distanceXY := c.manhattanDistance(coordParam, coordBase)
+
+		if distanceXY <= paramDistance {
+
+			options := models.Way{
+				From: models.Coordinate{
+					X: coordX,
+					Y: coordY,
+				},
+				To: models.Coordinate{
+					X: coordinate.X,
+					Y: coordinate.Y,
+				},
+				Distante: distanceXY,
+			}
+
+			way = append(way, options)
+		}
 
 	}
 
@@ -51,4 +64,15 @@ func (c *CoordinateService) sortDistance(way []models.Way) []models.Way {
 	})
 
 	return way
+}
+
+func (c *CoordinateService) manhattanDistance(vCoordParam, vCoordBase []int64) int64 {
+
+	distance := int64(0)
+
+	for idx, value := range vCoordParam {
+		distance += int64(math.Abs(float64(value) - float64(vCoordBase[idx])))
+	}
+
+	return distance
 }

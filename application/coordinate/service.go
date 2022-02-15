@@ -8,10 +8,10 @@ import (
 
 type CoordinateService struct {
 	PersisenceFile ICoordinatePersistenceFile
-	Utils           utils.IUtilsService
+	Utils          utils.IUtilsService
 }
 
-func (c *CoordinateService) Proccess(coordX, coordY int64) ([]models.Way, error) {
+func (c *CoordinateService) Proccess(coordX, coordY, distance int64) ([]models.Way, error) {
 
 	coordinateBase, err := c.PersisenceFile.ListPoints()
 
@@ -19,7 +19,7 @@ func (c *CoordinateService) Proccess(coordX, coordY int64) ([]models.Way, error)
 		return []models.Way{}, c.buildError(common.StatusError, []string{err.Error()})
 	}
 
-	way := c.calculateDistance(coordX, coordY, coordinateBase)
+	way := c.calculateDistance(coordX, coordY, distance, coordinateBase)
 
 	way = c.sortDistance(way)
 

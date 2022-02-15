@@ -23,14 +23,24 @@ func (w *WebServer) HandlerGetPoints(c echo.Context) error {
 		errCollector = append(errCollector, "coordinate Y is invalid")
 	}
 
+	distance, err := strconv.Atoi(c.QueryParam("distance"))
+
+	if err != nil {
+		errCollector = append(errCollector, "the distance is invalid")
+	}
+
 	if len(errCollector) > 0 {
 		return c.JSON(http.StatusBadRequest, w.buildError(errCollector))
 	}
 
-	result, err := w.ApplicationService.CoordinanteService.Proccess(int64(coordinateX), int64(coordinateY))
+	result, err := w.ApplicationService.CoordinanteService.Proccess(int64(coordinateX), int64(coordinateY), int64(distance))
 
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, err)
+	}
+
+	if len(result) <= 0 {
+		return c.JSON(http.StatusNoContent, nil)
 	}
 
 	return c.JSON(http.StatusOK, result)
