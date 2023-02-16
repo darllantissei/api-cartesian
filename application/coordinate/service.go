@@ -1,8 +1,8 @@
 package coordinate
 
 import (
-	"github.com/darllantissei/api-cartesian/application/common"
 	"github.com/darllantissei/api-cartesian/application/models"
+	statusapplication "github.com/darllantissei/api-cartesian/application/status_application"
 	"github.com/darllantissei/api-cartesian/application/utils"
 )
 
@@ -16,7 +16,7 @@ func (c *CoordinateService) Proccess(coordX, coordY, distance int64) ([]models.W
 	coordinateBase, err := c.PersisenceFile.ListPoints()
 
 	if err != nil {
-		return []models.Way{}, c.buildError(common.StatusError, []string{err.Error()})
+		return []models.Way{}, c.buildError(statusapplication.Error, []string{err.Error()})
 	}
 
 	way := c.calculateDistance(coordX, coordY, distance, coordinateBase)

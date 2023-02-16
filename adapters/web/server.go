@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/darllantissei/api-cartesian/application"
-	"github.com/darllantissei/api-cartesian/application/common"
 	"github.com/darllantissei/api-cartesian/application/models"
+	statusapplication "github.com/darllantissei/api-cartesian/application/status_application"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -48,7 +48,7 @@ func (w *WebServer) buildError(errs []string) error {
 
 		errResult := models.Returns{}
 
-		errResult.Return.Status = common.StatusError
+		errResult.Return.Status = statusapplication.Error
 		errResult.Return.Message = errs
 
 		return errResult

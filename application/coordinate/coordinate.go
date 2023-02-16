@@ -5,9 +5,10 @@ import (
 	"sort"
 
 	"github.com/darllantissei/api-cartesian/application/models"
+	statusapplication "github.com/darllantissei/api-cartesian/application/status_application"
 )
 
-func (c *CoordinateService) buildError(status string, messages []string) error {
+func (c *CoordinateService) buildError(status statusapplication.StatusApp, messages []string) error {
 
 	retErr := models.Returns{}
 

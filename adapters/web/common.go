@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/darllantissei/api-cartesian/application/common"
 	"github.com/darllantissei/api-cartesian/application/models"
+	statusapplication "github.com/darllantissei/api-cartesian/application/status_application"
 	"github.com/labstack/echo"
 )
 
@@ -16,7 +16,7 @@ func (w *WebServer) errorServer(err error, ectx echo.Context) {
 		errResult models.Returns
 	)
 
-	errResult.Return.Status = common.StatusError
+	errResult.Return.Status = statusapplication.Error
 
 	if he, ok := err.(*echo.HTTPError); ok {
 		code = he.Code
